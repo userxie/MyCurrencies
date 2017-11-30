@@ -25,7 +25,6 @@ public class JSONParser {
     static String sRawJsonString ="";
     OkHttpClient client = new OkHttpClient();
     public JSONParser(){}
-
     public JSONObject getJSONFromUrl(String url) throws IOException, JSONException {
         Request request = new Request.Builder().url(url).build();
         Response response = client.newCall(request).execute();
