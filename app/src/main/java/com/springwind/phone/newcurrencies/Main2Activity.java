@@ -32,14 +32,7 @@ public static final String URL_CODES =
 
         @Override
         protected JSONObject doInBackground(String... strings) {
-            try {
-                return new JSONParser().getJSONFromUrl(strings[0]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
+            return new JSONParser().getJSONFromUrl(strings[0]);
         }
 
         @Override

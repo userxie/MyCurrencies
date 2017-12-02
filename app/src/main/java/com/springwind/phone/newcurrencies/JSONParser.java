@@ -25,13 +25,21 @@ public class JSONParser {
     static String sRawJsonString ="";
     OkHttpClient client = new OkHttpClient();
     public JSONParser(){}
-    public JSONObject getJSONFromUrl(String url) throws IOException, JSONException {
+    public JSONObject getJSONFromUrl(String url)  {
         Request request = new Request.Builder().url(url).build();
-        Response response = client.newCall(request).execute();
-        if(response.isSuccessful()){
-            return new JSONObject(response.body().string());
-        }else {
-            throw new IOException("Unexpected code"+response);
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+            if(response.isSuccessful()){
+                return new JSONObject(response.body().string());
+            }else {
+                throw new IOException("Unexpected code"+response);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 }
