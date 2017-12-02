@@ -18,6 +18,7 @@ import java.util.Iterator;
 public class Main2Activity extends Activity {
 public static final String URL_CODES =
         "http://openexchangerates.org/api/currencies.json";
+    public static final String KEY_ARRAYLIST = "key_arraylist";
     private ArrayList<String> mCurrencies;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +27,8 @@ public static final String URL_CODES =
         setContentView(R.layout.activity_main2);
         new FetchCodesTask().execute(URL_CODES);
     }
-    private class FetchCodesTask extends AsyncTask<String ,Void,JSONObject>{
 
-        public static final String KEY_ARRAYLIST = "key_arraylist";
+    private class FetchCodesTask extends AsyncTask<String ,Void,JSONObject>{
 
         @Override
         protected JSONObject doInBackground(String... strings) {
