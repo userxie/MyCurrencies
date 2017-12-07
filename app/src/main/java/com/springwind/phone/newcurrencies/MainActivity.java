@@ -47,33 +47,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     //use to fetch the rates json object from openexchangerates.org
     public static final String URL_BASE =
             "http://openexchangerates.org/api/latest.json?app_id=";
-
-
     //used to format data from openexchangerates.org
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,##0.00000");
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id  = item.getItemId();
-        switch (id){
-            case R.id.mnu_invert:
-                invertCurrencies();
-                break;
-            case R.id.mnu_codes:
-                launchBrowser(Main2Activity.URL_CODES);
-                break;
-            case R.id.mnu_exit:
-                finish();
-                break;
-        }
-        return true;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +93,29 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
         mKey = getKey("open_key");
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id  = item.getItemId();
+        switch (id){
+            case R.id.mnu_invert:
+                invertCurrencies();
+                break;
+            case R.id.mnu_codes:
+                launchBrowser(Main2Activity.URL_CODES);
+                break;
+            case R.id.mnu_exit:
+                finish();
+                break;
+        }
+        return true;
     }
 
     public boolean isOnline(){
