@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public static interface CurrencyTaskCallback{
         void executionDone();
     }
-    public void setCurrencyTaskCallback(CurrencyTaskCallback mCurrencyTaskCallback  {
+    public void setCurrencyTaskCallback(CurrencyTaskCallback mCurrencyTaskCallback)  {
         this.mCurrencyTaskCallback = mCurrencyTaskCallback;
     }
     private class CurrencyConverterTask extends AsyncTask<String,Void,JSONObject> {

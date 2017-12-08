@@ -8,6 +8,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Muzhou on 12/7/2017.
@@ -21,6 +23,45 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2{
     @Override
     public void tearDown() throws Exception {
         super.tearDown();
+    }
+
+    public void testInteger() throws Throwable {
+        proxyCurrencyConverterTask("12");
+    }
+
+    public void testFloat() throws Throwable {
+        proxyCurrencyConverterTask("12..3");
+    }
+
+    public void proxyCurrencyConverterTask(final String str) throws Throwable {
+        final CountDownLatch latch = new CountDownLatch(1);
+        mMainActivity.setCurrencyTaskCallback(new MainActivity.CurrencyTaskCallback() {
+            @Override
+            public void executionDone() {
+                latch.countDown();
+                assertEquals(convertToDouble(mTextView.getText().toString().substring(0,5)),convertToDouble(str));
+            }
+        });
+        runTestOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mEditText.setText(str);
+                mForSpinner.setSelection(0);
+                mHomSpinner.setSelection(0);
+                mButton.performClick();
+
+            }
+        });
+        latch.await(30, TimeUnit.SECONDS);
+    }
+    public double convertToDouble(String str) throws NumberFormatException {
+        double dReturn = 0;
+        try{
+            dReturn = Double.parseDouble(str);
+        } catch (NumberFormatException e) {
+            throw e;
+        }
+        return dReturn;
     }
 
     @Override
