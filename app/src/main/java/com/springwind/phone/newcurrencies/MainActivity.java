@@ -88,11 +88,25 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onClick(View view) {
 
-                new CurrencyConverterTask().execute(URL_BASE + mKey);
+                if(isNumeric(String.valueOf(mAmountEditText.getText()))){
+                    new CurrencyConverterTask().execute(URL_BASE + mKey);
+                } else {
+                  Toast.makeText(MainActivity.this,"Not a numeric value,try again.",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
         mKey = getKey("open_key");
 
+    }
+
+    private boolean isNumeric(String s) {
+        try{
+            double dub = Double.parseDouble(s);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
     }
 
     @Override

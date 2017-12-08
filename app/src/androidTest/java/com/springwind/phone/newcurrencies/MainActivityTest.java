@@ -1,6 +1,9 @@
 package com.springwind.phone.newcurrencies;
 
+
+
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,17 +23,41 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2{
     private TextView mTextView;
     private EditText mEditText;
     private Spinner mForSpinner,mHomSpinner;
+    public MainActivityTest() {
+        super(MainActivity.class);
+    }
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+
+        ArrayList<String> bogusCurrencies = new ArrayList<String>();
+        bogusCurrencies.add("USD|United States Dollar");
+        bogusCurrencies.add("EUR|Euro");
+        Intent intent = new Intent();
+        intent.putStringArrayListExtra(Main2Activity.KEY_ARRAYLIST,bogusCurrencies);
+        setActivityIntent(intent);
+
+        mMainActivity = (MainActivity) getActivity();
+        mButton = (Button) mMainActivity.findViewById(R.id.button);
+        mTextView = (TextView) mMainActivity.findViewById(R.id.txt_converted);
+        mEditText = (EditText) mMainActivity.findViewById(R.id.editText);
+        mForSpinner = (Spinner) mMainActivity.findViewById(R.id.spn_for);
+        mHomSpinner = (Spinner) mMainActivity.findViewById(R.id.spn_hom);
+    }
+
     @Override
     public void tearDown() throws Exception {
         super.tearDown();
     }
 
+
+
     public void testInteger() throws Throwable {
         proxyCurrencyConverterTask("12");
     }
-
     public void testFloat() throws Throwable {
-        proxyCurrencyConverterTask("12..3");
+        proxyCurrencyConverterTask("12.3");
     }
 
     public void proxyCurrencyConverterTask(final String str) throws Throwable {
@@ -49,11 +76,11 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2{
                 mForSpinner.setSelection(0);
                 mHomSpinner.setSelection(0);
                 mButton.performClick();
-
             }
         });
         latch.await(30, TimeUnit.SECONDS);
     }
+
     public double convertToDouble(String str) throws NumberFormatException {
         double dReturn = 0;
         try{
@@ -62,28 +89,5 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2{
             throw e;
         }
         return dReturn;
-    }
-
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
-
-        ArrayList<String> bogusCurrencies = new ArrayList<String>();
-        bogusCurrencies.add("USD|United States Dollar");
-        bogusCurrencies.add("EUR|Euro");
-        Intent intent = new Intent();
-        intent.putExtra(Main2Activity.KEY_ARRAYLIST,bogusCurrencies);
-        setActivityIntent(intent);
-
-        mMainActivity = (MainActivity) getActivity();
-        mButton = (Button) mMainActivity.findViewById(R.id.button);
-        mTextView = (TextView) mMainActivity.findViewById(R.id.txt_converted);
-        mEditText = (EditText) mMainActivity.findViewById(R.id.editText);
-        mForSpinner = (Spinner) mMainActivity.findViewById(R.id.spn_for);
-        mHomSpinner = (Spinner) mMainActivity.findViewById(R.id.spn_hom);
-    }
-
-    public MainActivityTest(Class activityClass) {
-        super(activityClass);
     }
 }
