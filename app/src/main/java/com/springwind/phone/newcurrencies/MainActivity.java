@@ -192,7 +192,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+    private CurrencyTaskCallback mCurrencyTaskCallback;
 
+    public static interface CurrencyTaskCallback{
+        void executionDone();
+    }
+    public void setCurrencyTaskCallback(CurrencyTaskCallback mCurrencyTaskCallback  {
+        this.mCurrencyTaskCallback = mCurrencyTaskCallback;
+    }
     private class CurrencyConverterTask extends AsyncTask<String,Void,JSONObject> {
         private ProgressDialog mProgressDialog;
         @Override
@@ -244,6 +251,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
             mConvertedTextView.setText(DECIMAL_FORMAT.format(dCalculated)+" "+strHomCode);
             mProgressDialog.dismiss();
+            if(mCurrencyTaskCallback != null){
+                mCurrencyTaskCallback.executionDone();
+            }
         }
     }
 }

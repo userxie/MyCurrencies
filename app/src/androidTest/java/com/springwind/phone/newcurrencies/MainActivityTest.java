@@ -1,10 +1,13 @@
 package com.springwind.phone.newcurrencies;
 
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * Created by Muzhou on 12/7/2017.
@@ -23,6 +26,13 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2{
     @Override
     public void setUp() throws Exception {
         super.setUp();
+
+        ArrayList<String> bogusCurrencies = new ArrayList<String>();
+        bogusCurrencies.add("USD|United States Dollar");
+        bogusCurrencies.add("EUR|Euro");
+        Intent intent = new Intent();
+        intent.putExtra(Main2Activity.KEY_ARRAYLIST,bogusCurrencies);
+        setActivityIntent(intent);
 
         mMainActivity = (MainActivity) getActivity();
         mButton = (Button) mMainActivity.findViewById(R.id.button);
